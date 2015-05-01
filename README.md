@@ -11,9 +11,13 @@ Atlassian JIRA containerized.
 
 ### Execution
 
-The following example will run a JIRA server in detached mode on host port `80`, with application state stored in host directory `~/.jira`.
+First, start an external RDBMS that is supported. We will use PostgreSQL.
 
-`docker run -d -p 80:8080 -v ~/.jira:/data elodina/jira`
+`docker run --name jira-postgres-standalone -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=changeit -p 5432:5432 -d postgres`
+
+Now, start the JIRA server instance and expose it on host `port 80`.
+
+`docker run --name jira -p 80:8080 -d elodina/jira`
 
 
 ## Mesos
